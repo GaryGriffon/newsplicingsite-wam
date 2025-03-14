@@ -1,5 +1,5 @@
 # 设置工作目录
-
+starttime <- Sys.time()
 setwd("/home/gary/下载/code/wam/Training Set")
 
 extract_numbers_from_second_line <- function(filepath) {
@@ -14,6 +14,8 @@ extract_numbers_from_second_line <- function(filepath) {
   }
   
 }
+sum_point=0
+sum_right_point=0
 calculate_similarity <- function(predicted_data, actual_data) {
   # """
   # 计算两个 int 数组中相同数字的比例。
@@ -34,6 +36,10 @@ calculate_similarity <- function(predicted_data, actual_data) {
   
   # 计算比例（除以 actual_data 的长度）
   similarity <- common_count / length(actual_data)
+  
+  sum_right_point = sum_right_point + common_count
+  sum_point = sum_point + length(actual_data)
+  
   
   return(similarity)
 }
@@ -243,16 +249,16 @@ for (file in other_files) {
       length(potential_end_sites) > 0) {
     cat("File:", file, "\n")
     if (length(potential_start_sites) > 0) {
-      cat("  Potential start sites:", potential_start_sites, "\n")
+      cat("  潜在起始点:", potential_start_sites, "\n")
     }
     if (length(potential_end_sites) > 0) {
-      cat("  Potential end sites:", potential_end_sites, "\n")
+      cat("  潜在结束点:", potential_end_sites, "\n")
     }
   } else {
-    cat("File:", file, "No potential sites found.\n")
+    cat("File:", file, "未发现潜在位点.\n")
   }
   similarity <- calculate_similarity(mergedArray, numbers)
-  print(paste("Similarity:", similarity))
+  print(paste("准确率:", similarity))
   
   
   
@@ -265,6 +271,9 @@ for (file in other_files) {
   
   
 }
+print(paste("总准确率:", sum_right_point/sum_point))
+endtime <- Sys.time()
+print(paste("程序结束！用时",starttime - endtime,"秒"))
 
 # 绘制ROC曲线部分，需提供实际位点信息actual_sites
 
@@ -339,6 +348,7 @@ for (file in other_files) {
 # #   # 打印潜在位点
 # #   if (length(potential_start_sites) > 0 || length(potential_end_sites) > 0) {
 # #     cat("File:", file, "\n")
+# #       this program is grf edited.
 # #     if (length(potential_start_sites) > 0) {
 # #       cat("  Potential start sites:", potential_start_sites, "\n")
 # #     }
