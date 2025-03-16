@@ -81,11 +81,16 @@ for (file in files) {
   sequences <- gsub("\n", "", sequences)  # 去除换行符
   
   exon_sequences <- apply(exon_positions, 1, function(row) {
-    start_start <- row[1] - 3
-    start_end <- row[1] + 5
-    end_start <- row[2] - 3
-    end_end <- row[2] + 5
+    start_start <- row[1] - 15
+    start_end <- row[1] + 2
+    end_start <- row[2] - 1
+    end_end <- row[2] + 6
     
+    
+    # start_start <- row[1] - 8
+    # start_end <- row[1] + 2
+    # end_start <- row[2] - 1
+    # end_end <- row[2] + 6
     # 将 sequences 连接成一个字符串
     genome_seq <- paste(sequences, collapse = "")
     
